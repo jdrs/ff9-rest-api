@@ -22,4 +22,9 @@ public class LocationServiceImpl implements ILocationService {
     public List<Location> getAllLocations() {
         return locationDao.getAllLocations();
     }
+
+    @Override
+    public Location addLocation(Location location) {
+        return locationDao.addLocation(location);
+    }
 }

@@ -7,4 +7,5 @@ import java.util.List;
 public interface ICharacterService {
     public List<Character> getAllCharacters();
     public Character getCharacter(String id);
+    public Character addCharacter(Character character);
 }

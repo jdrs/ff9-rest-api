@@ -72,4 +72,25 @@ public class LocationDaoImpl implements ILocationDao {
 
         return loc;
     }
+
+    @Override
+    public Location addLocation(Location location) {
+        connect();
+
+        Location newLoc = null;
+
+        try {
+            PreparedStatement ps = conn.prepareStatement(
+                    "INSERT INTO loc_basic (name, type, region) VALUES " +
+                            "(\"" + location.getName() + "\", \"" + location.getType() + "\", \"" + location.getRegion() + "\")"
+            );
+            ps.executeUpdate();
+
+            newLoc = getLocation(location.getName());
+        } catch (SQLException  e) {
+            e.printStackTrace();
+        }
+
+        return newLoc;
+    }
 }

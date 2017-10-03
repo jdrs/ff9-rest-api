@@ -5,16 +5,18 @@ public class Character {
     private int id;
     private String name;
     private int age;
+    private String occupation;
     private Location home;
 
     public Character() {
 
     }
 
-    public Character(int id, String name, int age, Location home) {
+    public Character(int id, String name, int age, String occupation, Location home) {
         this.id = id;
         this.name = name;
         this.age = age;
+        this.occupation = occupation;
         this.home = home;
     }
 
@@ -28,6 +30,10 @@ public class Character {
 
     public int getAge() {
         return age;
+    }
+
+    public String getOccupation() {
+        return occupation;
     }
 
     public Location getHome() {
@@ -46,7 +52,11 @@ public class Character {
         this.age = age;
     }
 
-    public void setLocation(Location home) {
+    public void setOccupation(String occupation) {
+        this.occupation = occupation;
+    }
+
+    public void setHome(Location home) {
         this.home = home;
     }
 }

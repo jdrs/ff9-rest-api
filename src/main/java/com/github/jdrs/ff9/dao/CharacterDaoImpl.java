@@ -1,5 +1,6 @@
 package com.github.jdrs.ff9.dao;
 
+import com.github.jdrs.ff9.entity.Location;
 import com.github.jdrs.ff9.jdbc.JDBCConnection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -51,6 +52,7 @@ public class CharacterDaoImpl implements ICharacterDao {
                         rsCh.getInt("id"),
                         rsCh.getString("name"),
                         rsCh.getInt("age"),
+                        rsCh.getString("occupation"),
                         locationDao.getLocation(home_id))
                 );
             }
@@ -88,6 +90,7 @@ public class CharacterDaoImpl implements ICharacterDao {
                         rsCh.getInt("id"),
                         rsCh.getString("name"),
                         rsCh.getInt("age"),
+                        rsCh.getString("occupation"),
                         locationDao.getLocation(home_id)
                 );
             }
@@ -96,5 +99,41 @@ public class CharacterDaoImpl implements ICharacterDao {
         }
 
         return ch;
+    }
+
+    @Override
+    public Character addCharacter(Character character) {
+        connect();
+
+        Character newChar = null;
+
+        try {
+            PreparedStatement ps = conn.prepareStatement(
+                    "INSERT INTO ch_basic (name, age, occupation) VALUES " +
+                            "(\"" + character.getName() + "\", \"" + character.getAge() +
+                                "\", \"" + character.getOccupation() + "\")"
+            );
+            ps.executeUpdate();
+
+            Location existingLoc = locationDao.getLocation(character.getHome().getName());
+
+            if (existingLoc == null) {
+                locationDao.addLocation(character.getHome());
+            }
+
+            int ch_id = getCharacter(character.getName()).getId();
+            int loc_id = locationDao.getLocation(character.getHome().getName()).getId();
+
+            ps = conn.prepareStatement(
+                    "INSERT INTO ch_home (ch_id, loc_id) VALUES (" + ch_id + ", " + loc_id + ")"
+            );
+            ps.executeUpdate();
+
+            newChar = getCharacter(character.getName());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return newChar;
     }
 }

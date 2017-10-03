@@ -22,4 +22,9 @@ public class CharacterServiceImpl implements ICharacterService {
     public List<Character> getAllCharacters() {
         return characterDao.getAllCharacters();
     }
+
+    @Override
+    public Character addCharacter(Character character) {
+        return characterDao.addCharacter(character);
+    }
 }

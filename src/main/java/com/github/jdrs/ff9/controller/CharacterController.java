@@ -4,6 +4,7 @@ import com.github.jdrs.ff9.service.ICharacterService;
 import com.github.jdrs.ff9.entity.Character;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,5 +25,10 @@ public class CharacterController {
     @RequestMapping("/characters/character/{id}")
     public Character getCharacter(@PathVariable String id) {
         return characterService.getCharacter(id);
+    }
+
+    @RequestMapping("/characters/add")
+    public Character addCharacter(@RequestBody Character character) {
+        return characterService.addCharacter(character);
     }
 }
